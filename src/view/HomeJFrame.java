@@ -5,6 +5,8 @@
  */
 package view;
 
+import controller.GianHangCCController;
+import controller.GianHangTCController;
 import controller.KhachThueController;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -20,6 +22,9 @@ import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.plaf.BorderUIResource;
 import javax.swing.table.DefaultTableModel;
+import model.dto.GianHang;
+import model.dto.GianHangCC;
+import model.dto.GianHangTC;
 
 import model.dto.KhachThue;
 
@@ -36,18 +41,23 @@ public class HomeJFrame extends javax.swing.JFrame {
     CardLayout c1, c2;
     Border border = BorderFactory.createLineBorder(Color.RED, 1);
     Border border1 = BorderUIResource.getBlackLineBorderUIResource();
-
+    
     KhachThueController ktc = new KhachThueController();
-
+    GianHangCCController ghcc = new GianHangCCController();
+    GianHangTCController ghtc = new GianHangTCController();
     DefaultTableModel model = new DefaultTableModel();
-
+    
     public HomeJFrame() {
         initComponents();
-
+        setTitle("Quản lý Gian Hàng ");
+        
         this.select();
         this.methodKT();
+        this.methodGHCC();
+        this.methodGHTC();
+        this.search();
     }
-
+    
     public void select() {
         c1 = (CardLayout) (jPanel3.getLayout());
         jPanel3.setLayout(c1);
@@ -56,10 +66,12 @@ public class HomeJFrame extends javax.swing.JFrame {
         jPanel3.add(jPanelKhachThue, "kt");
         jComboBoxGianHang.addActionListener((e) -> {
             if (jComboBoxGianHang.getModel().getSelectedItem().equals("GianHangCC")) {
-
+                
                 c1.show(jPanel3, "ghcc");
+                getAllGHCC();
             } else {
                 c1.show(jPanel3, "ghtc");
+                getAllGHTC();
             }
         });
         jButtonKhachThue.addActionListener((e) -> {
@@ -67,7 +79,7 @@ public class HomeJFrame extends javax.swing.JFrame {
             getAllKT();
         });
     }
-
+    
     public void getAllKT() {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
@@ -78,8 +90,8 @@ public class HomeJFrame extends javax.swing.JFrame {
         jTableKt.setModel(model);
         model.setColumnIdentifiers(colunm);
         model.setRowCount(0);
-        for (int i = 0; i < ktc.get().size();i++) {
-            KhachThue temp  = ktc.get().get(i);
+        for (int i = 0; i < ktc.get().size(); i++) {
+            KhachThue temp = ktc.get().get(i);
             String[] data = new String[6];
             data[0] = temp.getName();
             data[1] = temp.getMaGianHang();
@@ -90,18 +102,18 @@ public class HomeJFrame extends javax.swing.JFrame {
             data[5] = String.valueOf(temp.getTienCoc());
             model.addRow(data);
         }
-
+        
     }
-
+    
     public void deleteKT() {
-
+        
         String s = maGianHangkt.getText();
         ktc.delete(s);
-
+        
         getAllKT();
-
+        
     }
-
+    
     public void addKT() {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
@@ -113,6 +125,12 @@ public class HomeJFrame extends javax.swing.JFrame {
         } else {
             namekt.setBorder(border1);
             kt.setName(namekt.getText());
+        }
+        if (addresskt.getText().equals("")) {
+            addresskt.setBorder(border);
+        } else {
+            addresskt.setBorder(border1);
+            kt.setAddress(addresskt.getText());
         }
         if (maGianHangkt.getText().equals("")) {
             maGianHangkt.setBorder(border);
@@ -132,9 +150,9 @@ public class HomeJFrame extends javax.swing.JFrame {
                 startTime.setBorder(border);
                 JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
-
+                
             }
-
+            
         }
         if (endTime.getText().equals("")) {
             endTime.setBorder(border);
@@ -143,12 +161,12 @@ public class HomeJFrame extends javax.swing.JFrame {
                 endTime.setBorder(border1);
                 date = df1.parse(endTime.getText());
                 cl.setTime(date);
-                kt.setStartTime(cl.getTime());
+                kt.setEndsTime(cl.getTime());
             } catch (ParseException e) {
                 endTime.setBorder(border);
                 JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
-
+                
             }
         }
         if (tienCockt.getText().equals("")) {
@@ -164,15 +182,15 @@ public class HomeJFrame extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ktc.add(kt);
-
+            
         } else if (result == JOptionPane.NO_OPTION) {
-
+            
         } else {
-
+            
         }
         getAllKT();
     }
-
+    
     public void updateKT() {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
@@ -190,7 +208,7 @@ public class HomeJFrame extends javax.swing.JFrame {
         } else {
             maGianHangkt.setBorder(border1);
             kt.setMaGianHang(maGianHangkt.getText());
-
+            
         }
         if (addresskt.getText().equals("")) {
             addresskt.setBorder(border);
@@ -210,9 +228,9 @@ public class HomeJFrame extends javax.swing.JFrame {
                 startTime.setBorder(border);
                 JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
-
+                
             }
-
+            
         }
         if (endTime.getText().equals("")) {
             endTime.setBorder(border);
@@ -221,12 +239,12 @@ public class HomeJFrame extends javax.swing.JFrame {
                 endTime.setBorder(border1);
                 date = df2.parse(endTime.getText());
                 cl.setTime(date);
-                kt.setStartTime(cl.getTime());
+                kt.setEndsTime(cl.getTime());
             } catch (ParseException e) {
                 endTime.setBorder(border);
                 JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
-
+                
             }
         }
         if (tienCockt.getText().equals("")) {
@@ -244,15 +262,15 @@ public class HomeJFrame extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ktc.update(kt);
-
+            
         } else if (result == JOptionPane.NO_OPTION) {
-
+            
         } else {
-
+            
         }
         getAllKT();
     }
-
+    
     public void searchKT() {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
@@ -272,28 +290,41 @@ public class HomeJFrame extends javax.swing.JFrame {
         data[4] = df2.format(temp.getEndsTime());
         data[5] = String.valueOf(temp.getTienCoc());
         model.addRow(data);
-
+        
     }
-
+    
     public void methodKT() {
         getkt.addActionListener((ae) -> {
             getAllKT();
+            restartKT();
         });
         updatekt.addActionListener((ae) -> {
             updateKT();
+            restartKT();
         });
         deletekt.addActionListener((ae) -> {
             deleteKT();
+            restartKT();
         });
         addkt.addActionListener((ae) -> {
             addKT();
+            restartKT();
         });
     }
-
-    public void getDataFromTable() {
+    
+    public void restartKT() {
+        namekt.setText("");
+        maGianHangkt.setText("");
+        addresskt.setText("");
+        startTime.setText("");
+        endTime.setText("");
+        tienCockt.setText("");
+    }
+    
+    public void getDataFromTableKT() {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
-
+        
         ArrayList<KhachThue> getAllkt = ktc.get();
         int i = jTableKt.getSelectedRow();
         KhachThue s = getAllkt.get(i);
@@ -303,6 +334,410 @@ public class HomeJFrame extends javax.swing.JFrame {
         startTime.setText(df1.format(s.getStartTime()));
         endTime.setText(df2.format(s.getEndsTime()));
         tienCockt.setText(String.valueOf(s.getTienCoc()));
+    }
+    
+    public void getAllGHCC() {
+        
+        Object columns[] = new Object[]{"MaGianHang", "Area", "Address", "SoLuongBanGhe", "SoLuongQuat"};
+        jTableGHCC.setModel(model);
+        model.setColumnIdentifiers(columns);
+        model.setRowCount(0);
+        for (GianHang gh : ghcc.get()) {
+            GianHangCC temp = (GianHangCC) gh;
+            String[] data = new String[6];
+            data[0] = temp.getMaGianHang();
+            data[1] = String.valueOf(temp.getDienTich());
+            data[2] = temp.getViTri();
+            data[3] = String.valueOf(temp.getSoLuongBanGhe());
+            data[4] = String.valueOf(temp.getSoLuongQuatLamMat());
+            model.addRow(data);
+        }
+    }
+    
+    public void getDataFromTableGHCC() {
+        ArrayList<GianHang> listGH = ghcc.get();
+        int i = jTableGHCC.getSelectedRow();
+        GianHangCC temp = (GianHangCC) listGH.get(i);
+        maGHCC.setText(temp.getMaGianHang());
+        areaGHCC.setText(String.valueOf(temp.getDienTich()));
+        addressGHCC.setText(temp.getViTri());
+        slbgGHCC.setText(String.valueOf(temp.getSoLuongBanGhe()));
+        slqGHCC.setText(String.valueOf(temp.getSoLuongQuatLamMat()));
+        
+    }
+    
+    public void addGHCC() {
+        GianHangCC temp = new GianHangCC();
+        if (maGHCC.getText().equals("")) {
+            maGHCC.setBorder(border);
+        } else {
+            maGHCC.setBorder(border1);
+            temp.setMaGianHang(maGHCC.getText());
+        }
+        if (areaGHCC.getText().equals("")) {
+            areaGHCC.setBorder(border);
+        } else {
+            areaGHCC.setBorder(border1);
+            temp.setDienTich(Double.parseDouble(areaGHCC.getText()));
+        }
+        if (addressGHCC.getText().equals("")) {
+            addressGHCC.setBorder(border);
+        } else {
+            addressGHCC.setBorder(border1);
+            temp.setViTri(addressGHCC.getText());
+        }
+        if (slbgGHCC.getText().equals("")) {
+            slbgGHCC.setBorder(border);
+        } else {
+            slbgGHCC.setBorder(border1);
+            temp.setSoLuongBanGhe(Integer.parseInt(slbgGHCC.getText()));
+        }
+        if (slqGHCC.getText().equals("")) {
+            slqGHCC.setBorder(border);
+        } else {
+            slqGHCC.setBorder(border1);
+            temp.setSoLuongQuatLamMat(Integer.parseInt(slqGHCC.getText()));
+        }
+        int result = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc muốn thêm gian hang này",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            ghcc.add(temp);
+            
+        } else if (result == JOptionPane.NO_OPTION) {
+            
+        } else {
+            
+        }
+        getAllGHCC();
+    }
+    
+    public void updateGHCC() {
+        GianHangCC temp = new GianHangCC();
+        if (maGHCC.getText().equals("")) {
+            maGHCC.setBorder(border);
+        } else {
+            maGHCC.setBorder(border1);
+            temp.setMaGianHang(maGHCC.getText());
+        }
+        if (areaGHCC.getText().equals("")) {
+            areaGHCC.setBorder(border);
+        } else {
+            areaGHCC.setBorder(border1);
+            temp.setDienTich(Double.parseDouble(areaGHCC.getText()));
+        }
+        if (addressGHCC.getText().equals("")) {
+            addressGHCC.setBorder(border);
+        } else {
+            addressGHCC.setBorder(border1);
+            temp.setViTri(addressGHCC.getText());
+        }
+        if (slbgGHCC.getText().equals("")) {
+            slbgGHCC.setBorder(border);
+        } else {
+            slbgGHCC.setBorder(border1);
+            temp.setSoLuongBanGhe(Integer.parseInt(slbgGHCC.getText()));
+        }
+        if (slqGHCC.getText().equals("")) {
+            slqGHCC.setBorder(border);
+        } else {
+            slqGHCC.setBorder(border1);
+            temp.setSoLuongQuatLamMat(Integer.parseInt(slqGHCC.getText()));
+        }
+        int result = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc muốn update gian hang này",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            ghcc.update(temp);
+            
+        } else if (result == JOptionPane.NO_OPTION) {
+            
+        } else {
+            
+        }
+        getAllGHCC();
+    }
+    
+    public void deleteGHCC() {
+        int result = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc muốn delete gian hang này",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            ghcc.delete(maGHCC.getText());
+            
+        } else if (result == JOptionPane.NO_OPTION) {
+            
+        } else {
+            
+        }
+        getAllGHCC();
+    }
+    
+    public void searchGHCC() {
+        Object columns[] = new Object[]{"MaGianHang", "Area", "Address", "SoLuongBanGhe", "SoLuongQuat"};
+        jTableGHCC.setModel(model);
+        model.setColumnIdentifiers(columns);
+        model.setRowCount(0);
+        
+        GianHangCC temp = (GianHangCC) ghcc.search(jTextField1.getText());
+        String[] data = new String[6];
+        data[0] = temp.getMaGianHang();
+        data[1] = String.valueOf(temp.getDienTich());
+        data[2] = temp.getViTri();
+        data[3] = String.valueOf(temp.getSoLuongBanGhe());
+        data[4] = String.valueOf(temp.getSoLuongQuatLamMat());
+        model.addRow(data);
+        
+    }
+    
+    public void restartGHCC() {
+        maGHCC.setText("");
+        areaGHCC.setText("");
+        addressGHCC.setText("");
+        slbgGHCC.setText("");
+        slqGHCC.setText("");
+    }
+    
+    public void methodGHCC() {
+        addGHCC.addActionListener((ae) -> {
+            addGHCC();
+            restartGHCC();
+        });
+        getGHCC.addActionListener((ae) -> {
+            getAllGHCC();
+            restartGHCC();
+        });
+        updateGHCC.addActionListener((ae) -> {
+            updateGHCC();
+            restartGHCC();
+        });
+        deleteGHCC.addActionListener((ae) -> {
+            deleteGHCC();
+            restartGHCC();
+        });
+        chiPhiGHCC.addActionListener((ae) -> {
+            new ChiphiJframe("ghcc", maGHCC.getText()).setVisible(true);
+        });
+        doanhThuGHCC.addActionListener((ae) -> {
+            new DoanhThuJframe("ghcc").setVisible(true);
+        });
+    }
+    
+    public void getDataFromTableGHTC() {
+        
+        ArrayList<GianHang> listGH = ghtc.get();
+        int i = jTableGHTC.getSelectedRow();
+        GianHangTC temp = (GianHangTC) listGH.get(i);
+        maGHTC.setText(temp.getMaGianHang());
+        areaGHTC.setText(String.valueOf(temp.getDienTich()));
+        addressGHTC.setText(temp.getViTri());
+        clmcGHTC.setText(temp.getChatLieuMaiChe());
+        clvnGHTC.setText(temp.getChatLieuVachNgan());
+    }
+    
+    public void getAllGHTC() {
+        
+        Object columns[] = new Object[]{"MaGianHang", "Area", "Address", "ChatLieuMaiChe", "ChatLieuVachNgan"};
+        jTableGHTC.setModel(model);
+        model.setColumnIdentifiers(columns);
+        model.setRowCount(0);
+        for (GianHang gh : ghtc.get()) {
+            GianHangTC temp = (GianHangTC) gh;
+            String[] data = new String[6];
+            data[0] = temp.getMaGianHang();
+            data[1] = String.valueOf(temp.getDienTich());
+            data[2] = temp.getViTri();
+            data[3] = temp.getChatLieuMaiChe();
+            data[4] = temp.getChatLieuVachNgan();
+            model.addRow(data);
+        }
+    }
+    
+    public void addGHTC() {
+        GianHangTC temp = new GianHangTC();
+        if (maGHTC.getText().equals("")) {
+            maGHTC.setBorder(border);
+        } else {
+            maGHTC.setBorder(border1);
+            temp.setMaGianHang(maGHTC.getText());
+        }
+        if (areaGHTC.getText().equals("")) {
+            areaGHTC.setBorder(border);
+        } else {
+            areaGHTC.setBorder(border1);
+            temp.setDienTich(Double.parseDouble(areaGHTC.getText()));
+        }
+        if (addressGHTC.getText().equals("")) {
+            addressGHTC.setBorder(border);
+        } else {
+            addressGHTC.setBorder(border1);
+            temp.setViTri(addressGHTC.getText());
+        }
+        if (clmcGHTC.getText().equals("")) {
+            clmcGHTC.setBorder(border);
+        } else {
+            clmcGHTC.setBorder(border1);
+            temp.setChatLieuMaiChe(clmcGHTC.getText());
+        }
+        if (clvnGHTC.getText().equals("")) {
+            clvnGHTC.setBorder(border);
+        } else {
+            clvnGHTC.setBorder(border1);
+            temp.setChatLieuVachNgan(clvnGHTC.getText());
+        }
+        int result = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc muốn thêm gian hang này",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            ghtc.add(temp);
+            
+        } else if (result == JOptionPane.NO_OPTION) {
+            
+        } else {
+            
+        }
+        getAllGHTC();
+    }
+    
+    public void updateGHTC() {
+        GianHangTC temp = new GianHangTC();
+        if (maGHTC.getText().equals("")) {
+            maGHTC.setBorder(border);
+        } else {
+            maGHTC.setBorder(border1);
+            temp.setMaGianHang(maGHTC.getText());
+        }
+        if (areaGHTC.getText().equals("")) {
+            areaGHCC.setBorder(border);
+        } else {
+            areaGHTC.setBorder(border1);
+            temp.setDienTich(Double.parseDouble(areaGHTC.getText()));
+        }
+        if (addressGHTC.getText().equals("")) {
+            addressGHTC.setBorder(border);
+        } else {
+            addressGHTC.setBorder(border1);
+            temp.setViTri(addressGHTC.getText());
+        }
+        if (clmcGHTC.getText().equals("")) {
+            clmcGHTC.setBorder(border);
+        } else {
+            clmcGHTC.setBorder(border1);
+            temp.setChatLieuMaiChe(clmcGHTC.getText());
+        }
+        if (clvnGHTC.getText().equals("")) {
+            clvnGHTC.setBorder(border);
+        } else {
+            clvnGHTC.setBorder(border1);
+            temp.setChatLieuVachNgan(clvnGHTC.getText());
+        }
+        int result = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc muốn update gian hang này",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            ghtc.update(temp);
+            
+        } else if (result == JOptionPane.NO_OPTION) {
+            
+        } else {
+            
+        }
+        getAllGHTC();
+    }
+    
+    public void deleteGHTC() {
+        int result = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc muốn delete gian hang này",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            ghtc.delete(maGHTC.getText());
+            
+        } else if (result == JOptionPane.NO_OPTION) {
+            
+        } else {
+            
+        }
+        getAllGHTC();
+    }
+    
+    public void searchGHTC() {
+        Object columns[] = new Object[]{"MaGianHang", "Area", "Address", "ChatLieuMaiChe", "ChatLieuVachNgan"};
+        jTableGHTC.setModel(model);
+        model.setColumnIdentifiers(columns);
+        model.setRowCount(0);
+        
+        GianHangTC temp = (GianHangTC) ghtc.search(jTextField1.getText());
+        String[] data = new String[6];
+        data[0] = temp.getMaGianHang();
+        data[1] = String.valueOf(temp.getDienTich());
+        data[2] = temp.getViTri();
+        data[3] = temp.getChatLieuMaiChe();
+        data[4] = temp.getChatLieuVachNgan();
+        model.addRow(data);
+        
+    }
+    
+    public void restartGHTC() {
+        maGHTC.setText("");
+        areaGHTC.setText("");
+        addGHTC.setText("");
+        clmcGHTC.setText("");
+        clvnGHTC.setText("");
+    }
+
+    public void methodGHTC() {
+        addGHTC.addActionListener((ae) -> {
+            addGHTC();
+            restartGHTC();
+        });
+        getGHTC.addActionListener((ae) -> {
+            getAllGHTC();
+            restartGHTC();
+        });
+        updateGHTC.addActionListener((ae) -> {
+            updateGHTC();
+            restartGHTC();
+        });
+        deleteGHTC.addActionListener((ae) -> {
+            deleteGHTC();
+            restartGHTC();
+        });
+        chiPhiGHTC.addActionListener((ae) -> {
+            new ChiphiJframe("ghtc", maGHTC.getText()).setVisible(true);
+        });
+        doanhThuGHTC.addActionListener((ae) -> {
+            new DoanhThuJframe("ghtc").setVisible(true);
+        });
+    }
+
+    public void search() {
+        search.addActionListener((ae) -> {
+            if (jComboBoxSearch.getModel().getSelectedItem().equals("GianHangCC")) {
+                c1.show(jPanel3, "ghcc");
+                searchGHCC();                
+            }
+            if (jComboBoxSearch.getModel().getSelectedItem().equals("GianHangTC")) {
+                searchGHTC();
+                c1.show(jPanel3, "ghtc");
+            }
+            if (jComboBoxSearch.getModel().getSelectedItem().equals("KhachThue")) {
+                searchKT();
+                c1.show(jPanel3, "kt");
+            }
+            
+        });
     }
 
     /**
@@ -387,7 +822,7 @@ public class HomeJFrame extends javax.swing.JFrame {
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(238, 201, 201));
+        jPanel1.setBackground(java.awt.Color.white);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jComboBoxGianHang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GianHangCC", "GianHangTC" }));
@@ -408,8 +843,10 @@ public class HomeJFrame extends javax.swing.JFrame {
         jPanel3.setBackground(java.awt.Color.white);
         jPanel3.setLayout(new java.awt.CardLayout());
 
-        jPanelGianHangCC.setBackground(new java.awt.Color(28, 220, 236));
+        jPanelGianHangCC.setBackground(new java.awt.Color(48, 225, 55));
         jPanelGianHangCC.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel6.setBackground(java.awt.Color.gray);
 
         jLabel12.setText("MaGianHang");
 
@@ -513,6 +950,7 @@ public class HomeJFrame extends javax.swing.JFrame {
 
         jPanelGianHangCC.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 450));
 
+        jTableGHCC.setForeground(java.awt.Color.gray);
         jTableGHCC.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -524,6 +962,11 @@ public class HomeJFrame extends javax.swing.JFrame {
                 "MaGianHang", "Area", "Address", "SoLuongBanGhe", "SoLuongQuat"
             }
         ));
+        jTableGHCC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableGHCCMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableGHCC);
 
         jPanelGianHangCC.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 500, 450));
@@ -532,6 +975,8 @@ public class HomeJFrame extends javax.swing.JFrame {
 
         jPanelGianHangTC.setBackground(new java.awt.Color(48, 225, 55));
         jPanelGianHangTC.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel5.setBackground(java.awt.Color.gray);
 
         jLabel7.setText("MaGianHang");
 
@@ -634,6 +1079,9 @@ public class HomeJFrame extends javax.swing.JFrame {
 
         jPanelGianHangTC.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 450));
 
+        jScrollPane2.setBackground(java.awt.Color.gray);
+
+        jTableGHTC.setForeground(java.awt.Color.gray);
         jTableGHTC.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -645,6 +1093,11 @@ public class HomeJFrame extends javax.swing.JFrame {
                 "MaGianHang", "Area", "Address", "ChatLieuMaiChe", "ChatLeuVachNgan"
             }
         ));
+        jTableGHTC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableGHTCMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableGHTC);
         jTableGHTC.getAccessibleContext().setAccessibleDescription("");
 
@@ -652,9 +1105,10 @@ public class HomeJFrame extends javax.swing.JFrame {
 
         jPanel3.add(jPanelGianHangTC, "card3");
 
+        jPanelKhachThue.setBackground(new java.awt.Color(48, 225, 55));
         jPanelKhachThue.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel4.setBackground(new java.awt.Color(237, 221, 101));
+        jPanel4.setBackground(java.awt.Color.gray);
 
         jLabel1.setText("Name");
 
@@ -690,35 +1144,26 @@ public class HomeJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(deletekt, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(addkt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(46, 46, 46)))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(namekt)
-                                .addComponent(tienCockt, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
-                            .addComponent(maGianHangkt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addresskt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(startTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(endTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(getkt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(updatekt, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
-                                .addGap(32, 32, 32)))))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 26, Short.MAX_VALUE))
+                    .addComponent(addkt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deletekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(namekt)
+                    .addComponent(tienCockt)
+                    .addComponent(maGianHangkt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addresskt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(endTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(getkt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(updatekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -749,18 +1194,21 @@ public class HomeJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(tienCockt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(getkt)
-                    .addComponent(addkt, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(addkt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(getkt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(deletekt)
-                    .addComponent(updatekt))
+                    .addComponent(updatekt, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanelKhachThue.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 450));
 
+        jScrollPane1.setBackground(java.awt.Color.gray);
+
+        jTableKt.setForeground(java.awt.Color.gray);
         jTableKt.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -789,6 +1237,7 @@ public class HomeJFrame extends javax.swing.JFrame {
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void endTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endTimeActionPerformed
@@ -804,8 +1253,16 @@ public class HomeJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_areaGHCCActionPerformed
 
     private void jTableKtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableKtMouseClicked
-        getDataFromTable();
+        getDataFromTableKT();
     }//GEN-LAST:event_jTableKtMouseClicked
+
+    private void jTableGHCCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableGHCCMouseClicked
+        getDataFromTableGHCC();
+    }//GEN-LAST:event_jTableGHCCMouseClicked
+
+    private void jTableGHTCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableGHTCMouseClicked
+        getDataFromTableGHTC();
+    }//GEN-LAST:event_jTableGHTCMouseClicked
 
     /**
      * @param args the command line arguments
