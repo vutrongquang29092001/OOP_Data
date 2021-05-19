@@ -20,8 +20,8 @@ import javax.swing.plaf.BorderUIResource;
  */
 public class LoginJFrame extends javax.swing.JFrame {
 
-    Border border = BorderFactory.createLineBorder(Color.RED, 1);
-    Border border1 = BorderUIResource.getBlackLineBorderUIResource();
+    private Border border = BorderFactory.createLineBorder(Color.RED, 1);
+    private Border border1 = BorderUIResource.getBlackLineBorderUIResource();
 
     /**
      * Creates new form LoginJFrame
@@ -49,15 +49,16 @@ public class LoginJFrame extends javax.swing.JFrame {
         login = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("User login");
 
         jPanel1.setBackground(java.awt.Color.darkGray);
 
         username.setBackground(java.awt.Color.darkGray);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/home/vutrongquang29092001/Pictures/user.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/user.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("/home/vutrongquang29092001/Pictures/pass.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/pass.png"))); // NOI18N
         jLabel2.setText("jLabel2");
 
         password.setBackground(java.awt.Color.darkGray);
@@ -80,9 +81,9 @@ public class LoginJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(109, 109, 109)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(1, 1, 1)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(username)
@@ -96,16 +97,16 @@ public class LoginJFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(127, 127, 127)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(username)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(login)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addGap(138, 138, 138))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -130,19 +131,19 @@ public class LoginJFrame extends javax.swing.JFrame {
             username.setBorder(border1);
         }
         String s = "";
-        for(char c :password.getPassword() ){
+        for (char c : password.getPassword()) {
             s += c;
         }
         System.out.println(s);
-        if(s.equals("")){
+        if (s.equals("")) {
             password.setBorder(border);
-        }else{
+        } else {
             password.setBorder(border1);
         }
-        if(username.getText().equals("admin") && s.equals("admin")){
+        if (username.getText().equals("admin") && s.equals("admin")) {
             new HomeJFrame().setVisible(true);
             this.dispose();
-           
+
         }
     }//GEN-LAST:event_loginActionPerformed
 

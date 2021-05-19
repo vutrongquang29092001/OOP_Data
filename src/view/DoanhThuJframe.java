@@ -10,6 +10,7 @@ import controller.GianHangTCController;
 import java.awt.Color;
 import java.awt.TextField;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -28,22 +30,30 @@ import model.dto.GianHangCC;
  *
  * @author vutrongquang29092001
  */
-public class DoanhThuJframe extends javax.swing.JFrame {
+//class tên DoanhThuJframe kế thừa class JFrame
+public class DoanhThuJframe extends JFrame {
 
     /**
      * Creates new form NewJFrame
      */
-    Border border = BorderFactory.createLineBorder(Color.RED, 1);
-    Border border1 = BorderUIResource.getBlackLineBorderUIResource();
-    GianHangCCController gianHangCCController = new GianHangCCController();
-    GianHangTCController gianHangTCController = new GianHangTCController();
-DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
+    // method khoi tao khong tham so
     public DoanhThuJframe() {
         initComponents();
     }
 
+    // method khoi tao có tham so 
     public DoanhThuJframe(String type) {
         initComponents();
+        doanhThuLogic(type);
+    }
+    // method tính doanh thu gian hang theo tham so truyen vào là  loai gian hang
+    public void doanhThuLogic(String type) {
+        Border border = BorderFactory.createLineBorder(Color.RED, 1);
+        Border border1 = BorderUIResource.getBlackLineBorderUIResource();
+        GianHangCCController gianHangCCController = new GianHangCCController();
+        GianHangTCController gianHangTCController = new GianHangTCController();
+        DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
+        DecimalFormat df2 = new DecimalFormat("#.##");
         ok.addActionListener((ae) -> {
             if (startTime.getText().equals("") && endTime.getText().equals("") && days.getText().equals("")) {
                 startTime.setBorder(border);
@@ -66,10 +76,10 @@ DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
                     } catch (ParseException ex) {
                         Logger.getLogger(DoanhThuJframe.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                   doanhThu.setText(String.valueOf( gianHangCCController.doanhThu(a, b)));
+                    doanhThu.setText(df2.format(gianHangCCController.doanhThu(a, b)));
                     
                 }
-                   if (type.equals("ghtc")) {
+                if (type.equals("ghtc")) {
                     Date a = null;
                     try {
                         a = df1.parse(startTime.getText());
@@ -82,21 +92,20 @@ DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
                     } catch (ParseException ex) {
                         Logger.getLogger(DoanhThuJframe.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                   doanhThu.setText(String.valueOf( gianHangTCController.doanhThu(a, b)));
+                    doanhThu.setText(df2.format(gianHangTCController.doanhThu(a, b)));
                     
                 }
             }
-            if(days.getText().equals("") == false){
+            if (days.getText().equals("") == false) {
                 days.setBorder(border1);
-                if(type.equals("ghcc")){
-                    doanhThu.setText(String.valueOf(gianHangCCController.doanhThu(Integer.parseInt(days.getText()))));
+                if (type.equals("ghcc")) {
+                    doanhThu.setText(df2.format(gianHangCCController.doanhThu(Integer.parseInt(days.getText()))));
                 }
-                if(type.equals("ghtc")){
-                    doanhThu.setText(String.valueOf(gianHangTCController.doanhThu(Integer.parseInt(days.getText()))));
+                if (type.equals("ghtc")) {
+                    doanhThu.setText(df2.format(gianHangTCController.doanhThu(Integer.parseInt(days.getText()))));
                 }
             }
-
-           
+            
         });
     }
 
@@ -123,12 +132,14 @@ DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Doanh Thu");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("StartTime");
 
         startTime.setText("yyyy/MM/dd");
 
+        endTime.setText("yyyy/MM/dd");
         endTime.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 endTimeActionPerformed(evt);
@@ -241,7 +252,7 @@ DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
     }//GEN-LAST:event_endTimeActionPerformed
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
-
+        
 
     }//GEN-LAST:event_okActionPerformed
 
@@ -298,35 +309,4 @@ DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
     private javax.swing.JTextField startTime;
     // End of variables declaration//GEN-END:variables
 
-    public JTextField getDays() {
-        return days;
-    }
-
-    public void setDays(JTextField days) {
-        this.days = days;
-    }
-
-    public JTextField getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(JTextField endTime) {
-        this.endTime = endTime;
-    }
-
-    public JButton getjButton2() {
-        return ok;
-    }
-
-    public void setjButton2(JButton jButton2) {
-        this.ok = jButton2;
-    }
-
-    public JTextField getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(JTextField startTime) {
-        this.startTime = startTime;
-    }
 }

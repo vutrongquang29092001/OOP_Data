@@ -191,9 +191,9 @@
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="addGHCC" alignment="1" max="32767" attributes="0"/>
                                           <Component id="updateGHCC" alignment="1" max="32767" attributes="0"/>
                                           <Component id="doanhThuGHCC" alignment="1" pref="85" max="32767" attributes="0"/>
+                                          <Component id="addGHCC" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -230,9 +230,9 @@
                                   <Component id="slqGHCC" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="getGHCC" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="addGHCC" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="getGHCC" max="32767" attributes="0"/>
+                                  <Component id="addGHCC" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -440,16 +440,17 @@
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="chiPhiGHTC" max="32767" attributes="0"/>
                                           <Component id="deleteGHTC" pref="85" max="32767" attributes="0"/>
                                           <Component id="getGHTC" max="32767" attributes="0"/>
+                                          <Component id="chiPhiGHTC" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="addGHTC" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="updateGHTC" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="doanhThuGHTC" alignment="1" pref="85" max="32767" attributes="0"/>
+                                          <Component id="addGHTC" max="32767" attributes="0"/>
+                                          <Component id="updateGHTC" max="32767" attributes="0"/>
+                                          <Component id="doanhThuGHTC" pref="96" max="32767" attributes="0"/>
                                       </Group>
+                                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -485,19 +486,19 @@
                                   <Component id="clvnGHTC" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="getGHTC" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="addGHTC" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="getGHTC" max="32767" attributes="0"/>
+                                  <Component id="addGHTC" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="deleteGHTC" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="updateGHTC" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="deleteGHTC" pref="40" max="32767" attributes="0"/>
+                                  <Component id="updateGHTC" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="chiPhiGHTC" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="doanhThuGHTC" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="doanhThuGHTC" max="32767" attributes="0"/>
+                                  <Component id="chiPhiGHTC" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace pref="31" max="32767" attributes="0"/>
                           </Group>
@@ -548,11 +549,6 @@
                         <Property name="text" type="java.lang.String" value="get"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="addGHTC">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="add"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JButton" name="deleteGHTC">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="delete"/>
@@ -571,6 +567,11 @@
                     <Component class="javax.swing.JButton" name="doanhThuGHTC">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="DoanhThu"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="addGHTC">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="add"/>
                       </Properties>
                     </Component>
                   </SubComponents>

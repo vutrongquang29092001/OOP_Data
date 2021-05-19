@@ -10,6 +10,7 @@ import controller.GianHangTCController;
 import java.awt.Color;
 import java.awt.TextField;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,41 +18,47 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.plaf.BorderUIResource;
 
-
 /**
  *
  * @author vutrongquang29092001
  */
-public class ChiphiJframe extends javax.swing.JFrame {
+// class tên ChiphiJframe kế thừa class JFrame
+public class ChiphiJframe extends JFrame {
 
     /**
      * Creates new form NewJFrame
      */
-    Border border = BorderFactory.createLineBorder(Color.RED, 1);
-    Border border1 = BorderUIResource.getBlackLineBorderUIResource();
-    GianHangCCController gianHangCCController = new GianHangCCController();
-    GianHangTCController gianHangTCController = new GianHangTCController();
-DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
+    //method constructor không tham số
     public ChiphiJframe() {
         initComponents();
     }
 
+    // method constructor có tham số
     public ChiphiJframe(String type, String id) {
         initComponents();
+
+        Border border = BorderFactory.createLineBorder(Color.RED, 1);
+        Border border1 = BorderUIResource.getBlackLineBorderUIResource();
+        GianHangCCController gianHangCCController = new GianHangCCController();
+        GianHangTCController gianHangTCController = new GianHangTCController();
+        DecimalFormat df2 = new DecimalFormat("#.##");
+        DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
+        //sự kiện khi bấm nút 
         ok.addActionListener((ae) -> {
             if (startTime.getText().equals("") && endTime.getText().equals("") && days.getText().equals("")) {
                 startTime.setBorder(border);
                 endTime.setBorder(border);
                 days.setBorder(border);
             }
-            System.out.println("....");
+
             if (startTime.getText().equals("") == false && endTime.getText().equals("") == false) {
-                System.out.println("...");
+
                 startTime.setBorder(border1);
                 endTime.setBorder(border1);
                 if (type.equals("ghcc")) {
@@ -67,14 +74,14 @@ DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
                     } catch (ParseException ex) {
                         Logger.getLogger(ChiphiJframe.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                   chiphi.setText(String.valueOf( gianHangCCController.chiPhiThueGianHang(id, a, b)));
-                    
+                    chiphi.setText(df2.format(gianHangCCController.chiPhiThueGianHang(id, a, b)));
+
                 }
-                   if (type.equals("ghtc")) {
+                if (type.equals("ghtc")) {
                     Date a = null;
                     try {
                         a = df1.parse(startTime.getText());
-                        System.out.println(df1.format(a));
+
                     } catch (ParseException ex) {
                         Logger.getLogger(ChiphiJframe.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -84,21 +91,20 @@ DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
                     } catch (ParseException ex) {
                         Logger.getLogger(ChiphiJframe.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                   chiphi.setText(String.valueOf( gianHangTCController.chiPhiThueGianHang(id, a, b)));
-                    
+                    chiphi.setText(df2.format(gianHangTCController.chiPhiThueGianHang(id, a, b)));
+
                 }
             }
-            if(days.getText().equals("") == false){
+            if (days.getText().equals("") == false) {
                 days.setBorder(border1);
-                if(type.equals("ghcc")){
-                    chiphi.setText(String.valueOf(gianHangCCController.chiPhiThueGianHang(id,Integer.parseInt(days.getText()))));
+                if (type.equals("ghcc")) {
+                    chiphi.setText(df2.format(gianHangCCController.chiPhiThueGianHang(id, Integer.parseInt(days.getText()))));
                 }
-                if(type.equals("ghtc")){
-                    chiphi.setText(String.valueOf(gianHangTCController.chiPhiThueGianHang(id,Integer.parseInt(days.getText()))));
+                if (type.equals("ghtc")) {
+                    chiphi.setText(df2.format(gianHangTCController.chiPhiThueGianHang(id, Integer.parseInt(days.getText()))));
                 }
             }
 
-           
         });
     }
 
@@ -125,6 +131,7 @@ DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Chi Phi");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("StartTime");
@@ -279,7 +286,7 @@ DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChiphiJframe("ghtc","2").setVisible(true);
+                new ChiphiJframe("ghtc", "2").setVisible(true);
             }
         });
     }
@@ -299,35 +306,4 @@ DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
     private javax.swing.JTextField startTime;
     // End of variables declaration//GEN-END:variables
 
-    public JTextField getDays() {
-        return days;
-    }
-
-    public void setDays(JTextField days) {
-        this.days = days;
-    }
-
-    public JTextField getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(JTextField endTime) {
-        this.endTime = endTime;
-    }
-
-    public JButton getjButton2() {
-        return ok;
-    }
-
-    public void setjButton2(JButton jButton2) {
-        this.ok = jButton2;
-    }
-
-    public JTextField getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(JTextField startTime) {
-        this.startTime = startTime;
-    }
 }

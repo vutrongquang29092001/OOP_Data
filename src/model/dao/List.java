@@ -22,8 +22,9 @@ import model.dto.KhachThue;
  *
  * @author vutrongquang29092001
  */
-public class List {
+public class List { // class tên List phạm vi truy cập public 
 
+    // method lấy danh sách các GianHangCC , kiểu dữ liệu ArrayList<GianHang> sử dung liên kết muộn 
     public static ArrayList<GianHang> listGhCC() {
         ArrayList<GianHang> list = new ArrayList<>();
 
@@ -47,7 +48,7 @@ public class List {
         return list;
 
     }
-
+    // method lấy danh sách GianHangTC, kiểu dữ kiệu trả về ArrayList<GianHang> , sử dụng liên kết muộn
     public static ArrayList<GianHang> listGhTC() {
         ArrayList<GianHang> list = new ArrayList<>();
         GianHangTC gh = new GianHangTC("1", 23, "DHBK", "tot", "tot");
@@ -70,7 +71,7 @@ public class List {
         list.add(gh8);
         return list;
     }
-
+    // method lấy danh sách KhachThue , kiểu dữ liệu ArrayList<KhachThue>
     public static ArrayList<KhachThue> listKT() {
         ArrayList<KhachThue> list = new ArrayList<>();
         Calendar c1 = Calendar.getInstance();

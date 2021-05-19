@@ -41,23 +41,24 @@ public class HomeJFrame extends javax.swing.JFrame {
     CardLayout c1, c2;
     Border border = BorderFactory.createLineBorder(Color.RED, 1);
     Border border1 = BorderUIResource.getBlackLineBorderUIResource();
-    
     KhachThueController ktc = new KhachThueController();
     GianHangCCController ghcc = new GianHangCCController();
     GianHangTCController ghtc = new GianHangTCController();
     DefaultTableModel model = new DefaultTableModel();
-    
+
+    //method khoi tao khong tham so 
     public HomeJFrame() {
         initComponents();
         setTitle("Quản lý Gian Hàng ");
-        
+
         this.select();
         this.methodKT();
         this.methodGHCC();
         this.methodGHTC();
         this.search();
     }
-    
+
+    //method xử lí hiện thị thông tin của đối tượng user chọn
     public void select() {
         c1 = (CardLayout) (jPanel3.getLayout());
         jPanel3.setLayout(c1);
@@ -66,7 +67,7 @@ public class HomeJFrame extends javax.swing.JFrame {
         jPanel3.add(jPanelKhachThue, "kt");
         jComboBoxGianHang.addActionListener((e) -> {
             if (jComboBoxGianHang.getModel().getSelectedItem().equals("GianHangCC")) {
-                
+
                 c1.show(jPanel3, "ghcc");
                 getAllGHCC();
             } else {
@@ -79,7 +80,8 @@ public class HomeJFrame extends javax.swing.JFrame {
             getAllKT();
         });
     }
-    
+
+    // method hiện thị thông tin khách thuê ra table
     public void getAllKT() {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
@@ -97,23 +99,25 @@ public class HomeJFrame extends javax.swing.JFrame {
             data[1] = temp.getMaGianHang();
             data[2] = temp.getAddress();
             data[3] = df1.format(temp.getStartTime());
-            
+
             data[4] = df1.format(temp.getEndsTime());
             data[5] = String.valueOf(temp.getTienCoc());
             model.addRow(data);
         }
-        
+
     }
-    
+
+    // method xóa khách thuê
     public void deleteKT() {
-        
+
         String s = maGianHangkt.getText();
         ktc.delete(s);
-        
+
         getAllKT();
-        
+
     }
-    
+
+    // method them một khách thuê
     public void addKT() {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
@@ -150,9 +154,9 @@ public class HomeJFrame extends javax.swing.JFrame {
                 startTime.setBorder(border);
                 JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
-                
+
             }
-            
+
         }
         if (endTime.getText().equals("")) {
             endTime.setBorder(border);
@@ -166,7 +170,7 @@ public class HomeJFrame extends javax.swing.JFrame {
                 endTime.setBorder(border);
                 JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
-                
+
             }
         }
         if (tienCockt.getText().equals("")) {
@@ -182,15 +186,16 @@ public class HomeJFrame extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ktc.add(kt);
-            
+
         } else if (result == JOptionPane.NO_OPTION) {
-            
+
         } else {
-            
+
         }
         getAllKT();
     }
-    
+
+    //method sửa thông tin khách thuê
     public void updateKT() {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
@@ -208,7 +213,7 @@ public class HomeJFrame extends javax.swing.JFrame {
         } else {
             maGianHangkt.setBorder(border1);
             kt.setMaGianHang(maGianHangkt.getText());
-            
+
         }
         if (addresskt.getText().equals("")) {
             addresskt.setBorder(border);
@@ -228,9 +233,9 @@ public class HomeJFrame extends javax.swing.JFrame {
                 startTime.setBorder(border);
                 JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
-                
+
             }
-            
+
         }
         if (endTime.getText().equals("")) {
             endTime.setBorder(border);
@@ -244,7 +249,7 @@ public class HomeJFrame extends javax.swing.JFrame {
                 endTime.setBorder(border);
                 JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
-                
+
             }
         }
         if (tienCockt.getText().equals("")) {
@@ -262,15 +267,16 @@ public class HomeJFrame extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ktc.update(kt);
-            
+
         } else if (result == JOptionPane.NO_OPTION) {
-            
+
         } else {
-            
+
         }
         getAllKT();
     }
-    
+
+    //method tìm kiếm thông tin khách thuê
     public void searchKT() {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
@@ -290,9 +296,10 @@ public class HomeJFrame extends javax.swing.JFrame {
         data[4] = df2.format(temp.getEndsTime());
         data[5] = String.valueOf(temp.getTienCoc());
         model.addRow(data);
-        
+
     }
-    
+
+    // method xử lí sự kiện khi nhấn các nút chọn button
     public void methodKT() {
         getkt.addActionListener((ae) -> {
             getAllKT();
@@ -311,7 +318,8 @@ public class HomeJFrame extends javax.swing.JFrame {
             restartKT();
         });
     }
-    
+
+    // method reset lại ô điền thông tin khách thuê
     public void restartKT() {
         namekt.setText("");
         maGianHangkt.setText("");
@@ -320,11 +328,12 @@ public class HomeJFrame extends javax.swing.JFrame {
         endTime.setText("");
         tienCockt.setText("");
     }
-    
+
+    //method xử lí logic đưa thông tin khách thuê ra table
     public void getDataFromTableKT() {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
-        
+
         ArrayList<KhachThue> getAllkt = ktc.get();
         int i = jTableKt.getSelectedRow();
         KhachThue s = getAllkt.get(i);
@@ -335,16 +344,17 @@ public class HomeJFrame extends javax.swing.JFrame {
         endTime.setText(df2.format(s.getEndsTime()));
         tienCockt.setText(String.valueOf(s.getTienCoc()));
     }
-    
+
+    // method xử lí logic lấy thông tin khách thuê từ table đưa vào textfile
     public void getAllGHCC() {
-        
+
         Object columns[] = new Object[]{"MaGianHang", "Area", "Address", "SoLuongBanGhe", "SoLuongQuat"};
         jTableGHCC.setModel(model);
         model.setColumnIdentifiers(columns);
         model.setRowCount(0);
         for (GianHang gh : ghcc.get()) {
             GianHangCC temp = (GianHangCC) gh;
-            String[] data = new String[6];
+            String[] data = new String[5];
             data[0] = temp.getMaGianHang();
             data[1] = String.valueOf(temp.getDienTich());
             data[2] = temp.getViTri();
@@ -353,7 +363,8 @@ public class HomeJFrame extends javax.swing.JFrame {
             model.addRow(data);
         }
     }
-    
+    // method xử lí logic lấy thông tin gian hàng cc từ table đưa vào textfile
+
     public void getDataFromTableGHCC() {
         ArrayList<GianHang> listGH = ghcc.get();
         int i = jTableGHCC.getSelectedRow();
@@ -363,9 +374,10 @@ public class HomeJFrame extends javax.swing.JFrame {
         addressGHCC.setText(temp.getViTri());
         slbgGHCC.setText(String.valueOf(temp.getSoLuongBanGhe()));
         slqGHCC.setText(String.valueOf(temp.getSoLuongQuatLamMat()));
-        
+
     }
-    
+
+    // method them gian hàng cc 
     public void addGHCC() {
         GianHangCC temp = new GianHangCC();
         if (maGHCC.getText().equals("")) {
@@ -405,15 +417,16 @@ public class HomeJFrame extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ghcc.add(temp);
-            
+
         } else if (result == JOptionPane.NO_OPTION) {
-            
+
         } else {
-            
+
         }
         getAllGHCC();
     }
-    
+
+    // method chỉnh sửa thông tin gian hàng cc 
     public void updateGHCC() {
         GianHangCC temp = new GianHangCC();
         if (maGHCC.getText().equals("")) {
@@ -453,15 +466,16 @@ public class HomeJFrame extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ghcc.update(temp);
-            
+
         } else if (result == JOptionPane.NO_OPTION) {
-            
+
         } else {
-            
+
         }
         getAllGHCC();
     }
-    
+
+    // method xóa gian hàng cc 
     public void deleteGHCC() {
         int result = JOptionPane.showConfirmDialog(this,
                 "Bạn có chắc muốn delete gian hang này",
@@ -470,21 +484,22 @@ public class HomeJFrame extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ghcc.delete(maGHCC.getText());
-            
+
         } else if (result == JOptionPane.NO_OPTION) {
-            
+
         } else {
-            
+
         }
         getAllGHCC();
     }
-    
+
+    // method tìm kiếm thông tin gian hàng cc
     public void searchGHCC() {
         Object columns[] = new Object[]{"MaGianHang", "Area", "Address", "SoLuongBanGhe", "SoLuongQuat"};
         jTableGHCC.setModel(model);
         model.setColumnIdentifiers(columns);
         model.setRowCount(0);
-        
+
         GianHangCC temp = (GianHangCC) ghcc.search(jTextField1.getText());
         String[] data = new String[6];
         data[0] = temp.getMaGianHang();
@@ -493,9 +508,10 @@ public class HomeJFrame extends javax.swing.JFrame {
         data[3] = String.valueOf(temp.getSoLuongBanGhe());
         data[4] = String.valueOf(temp.getSoLuongQuatLamMat());
         model.addRow(data);
-        
+
     }
-    
+
+    // method reset ô điền textfile của gian hàng cc
     public void restartGHCC() {
         maGHCC.setText("");
         areaGHCC.setText("");
@@ -503,7 +519,8 @@ public class HomeJFrame extends javax.swing.JFrame {
         slbgGHCC.setText("");
         slqGHCC.setText("");
     }
-    
+
+    //method xử lí các sự kiên khị nhấn các nút chọn button
     public void methodGHCC() {
         addGHCC.addActionListener((ae) -> {
             addGHCC();
@@ -528,9 +545,10 @@ public class HomeJFrame extends javax.swing.JFrame {
             new DoanhThuJframe("ghcc").setVisible(true);
         });
     }
-    
+
+    // method xử lí logic lấy thông tin gian hàng tc từ table đưa vào textfile
     public void getDataFromTableGHTC() {
-        
+
         ArrayList<GianHang> listGH = ghtc.get();
         int i = jTableGHTC.getSelectedRow();
         GianHangTC temp = (GianHangTC) listGH.get(i);
@@ -540,16 +558,17 @@ public class HomeJFrame extends javax.swing.JFrame {
         clmcGHTC.setText(temp.getChatLieuMaiChe());
         clvnGHTC.setText(temp.getChatLieuVachNgan());
     }
-    
+
+    //method hiện thị thông tin gian hàng tc ra table
     public void getAllGHTC() {
-        
+
         Object columns[] = new Object[]{"MaGianHang", "Area", "Address", "ChatLieuMaiChe", "ChatLieuVachNgan"};
         jTableGHTC.setModel(model);
         model.setColumnIdentifiers(columns);
         model.setRowCount(0);
         for (GianHang gh : ghtc.get()) {
             GianHangTC temp = (GianHangTC) gh;
-            String[] data = new String[6];
+            String[] data = new String[5];
             data[0] = temp.getMaGianHang();
             data[1] = String.valueOf(temp.getDienTich());
             data[2] = temp.getViTri();
@@ -558,7 +577,8 @@ public class HomeJFrame extends javax.swing.JFrame {
             model.addRow(data);
         }
     }
-    
+
+    //method them gian hàng tc
     public void addGHTC() {
         GianHangTC temp = new GianHangTC();
         if (maGHTC.getText().equals("")) {
@@ -598,15 +618,16 @@ public class HomeJFrame extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ghtc.add(temp);
-            
+
         } else if (result == JOptionPane.NO_OPTION) {
-            
+
         } else {
-            
+
         }
         getAllGHTC();
     }
-    
+
+    // method chỉnh sửa thông tin gian hàng tc
     public void updateGHTC() {
         GianHangTC temp = new GianHangTC();
         if (maGHTC.getText().equals("")) {
@@ -646,15 +667,16 @@ public class HomeJFrame extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ghtc.update(temp);
-            
+
         } else if (result == JOptionPane.NO_OPTION) {
-            
+
         } else {
-            
+
         }
         getAllGHTC();
     }
-    
+
+    // method xóa một gian hàng tc
     public void deleteGHTC() {
         int result = JOptionPane.showConfirmDialog(this,
                 "Bạn có chắc muốn delete gian hang này",
@@ -663,21 +685,22 @@ public class HomeJFrame extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ghtc.delete(maGHTC.getText());
-            
+
         } else if (result == JOptionPane.NO_OPTION) {
-            
+
         } else {
-            
+
         }
         getAllGHTC();
     }
-    
+
+    // method tìm kiếm gian hàng tc
     public void searchGHTC() {
         Object columns[] = new Object[]{"MaGianHang", "Area", "Address", "ChatLieuMaiChe", "ChatLieuVachNgan"};
         jTableGHTC.setModel(model);
         model.setColumnIdentifiers(columns);
         model.setRowCount(0);
-        
+
         GianHangTC temp = (GianHangTC) ghtc.search(jTextField1.getText());
         String[] data = new String[6];
         data[0] = temp.getMaGianHang();
@@ -686,23 +709,25 @@ public class HomeJFrame extends javax.swing.JFrame {
         data[3] = temp.getChatLieuMaiChe();
         data[4] = temp.getChatLieuVachNgan();
         model.addRow(data);
-        
+
     }
-    
+    // method reset ô điền textfile của gian hàng tc
+
     public void restartGHTC() {
         maGHTC.setText("");
         areaGHTC.setText("");
-        addGHTC.setText("");
+        addressGHTC.setText("");
         clmcGHTC.setText("");
         clvnGHTC.setText("");
     }
 
+    //method xử lí các sự kiên khị nhấn các nút chọn button
     public void methodGHTC() {
         addGHTC.addActionListener((ae) -> {
             addGHTC();
             restartGHTC();
         });
-        getGHTC.addActionListener((ae) -> {
+        getGHTC.addActionListener((ae1) -> {
             getAllGHTC();
             restartGHTC();
         });
@@ -722,11 +747,12 @@ public class HomeJFrame extends javax.swing.JFrame {
         });
     }
 
+    // method xử lí tìm kiếm thông tin của ghcc, ghtc , khachthue khi nhấn nút button
     public void search() {
         search.addActionListener((ae) -> {
             if (jComboBoxSearch.getModel().getSelectedItem().equals("GianHangCC")) {
                 c1.show(jPanel3, "ghcc");
-                searchGHCC();                
+                searchGHCC();
             }
             if (jComboBoxSearch.getModel().getSelectedItem().equals("GianHangTC")) {
                 searchGHTC();
@@ -736,7 +762,7 @@ public class HomeJFrame extends javax.swing.JFrame {
                 searchKT();
                 c1.show(jPanel3, "kt");
             }
-            
+
         });
     }
 
@@ -790,11 +816,11 @@ public class HomeJFrame extends javax.swing.JFrame {
         clmcGHTC = new javax.swing.JTextField();
         clvnGHTC = new javax.swing.JTextField();
         getGHTC = new javax.swing.JButton();
-        addGHTC = new javax.swing.JButton();
         deleteGHTC = new javax.swing.JButton();
         updateGHTC = new javax.swing.JButton();
         chiPhiGHTC = new javax.swing.JButton();
         doanhThuGHTC = new javax.swing.JButton();
+        addGHTC = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableGHTC = new javax.swing.JTable();
         jPanelKhachThue = new javax.swing.JPanel();
@@ -905,9 +931,9 @@ public class HomeJFrame extends javax.swing.JFrame {
                             .addComponent(getGHCC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(addGHCC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(updateGHCC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(doanhThuGHCC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))))
+                            .addComponent(doanhThuGHCC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                            .addComponent(addGHCC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -934,9 +960,9 @@ public class HomeJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel16)
                     .addComponent(slqGHCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(getGHCC)
-                    .addComponent(addGHCC))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(getGHCC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addGHCC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteGHCC)
@@ -996,8 +1022,6 @@ public class HomeJFrame extends javax.swing.JFrame {
 
         getGHTC.setText("get");
 
-        addGHTC.setText("add");
-
         deleteGHTC.setText("delete");
 
         updateGHTC.setText("update");
@@ -1005,6 +1029,8 @@ public class HomeJFrame extends javax.swing.JFrame {
         chiPhiGHTC.setText("ChiPhi");
 
         doanhThuGHTC.setText("DoanhThu");
+
+        addGHTC.setText("add");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1029,14 +1055,15 @@ public class HomeJFrame extends javax.swing.JFrame {
                             .addComponent(maGHTC)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(chiPhiGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(deleteGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                            .addComponent(getGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(getGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(chiPhiGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(addGHTC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(updateGHTC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(doanhThuGHTC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))))
+                            .addComponent(addGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(updateGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(doanhThuGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                        .addGap(12, 12, 12)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -1063,17 +1090,17 @@ public class HomeJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(clvnGHTC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(getGHTC)
-                    .addComponent(addGHTC))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteGHTC)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(getGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(deleteGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                     .addComponent(updateGHTC))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chiPhiGHTC)
-                    .addComponent(doanhThuGHTC))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(doanhThuGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chiPhiGHTC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -1251,15 +1278,15 @@ public class HomeJFrame extends javax.swing.JFrame {
     private void areaGHCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_areaGHCCActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_areaGHCCActionPerformed
-
+    //method xử lí sử kiện khi click chuột vào table của khách thuê
     private void jTableKtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableKtMouseClicked
         getDataFromTableKT();
     }//GEN-LAST:event_jTableKtMouseClicked
-
+    //method xử lí sử kiện khi click chuột vào table của gian hàng cc
     private void jTableGHCCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableGHCCMouseClicked
         getDataFromTableGHCC();
     }//GEN-LAST:event_jTableGHCCMouseClicked
-
+    //method xử lí sử kiện khi click chuột vào table của gian hàng tc
     private void jTableGHTCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableGHTCMouseClicked
         getDataFromTableGHTC();
     }//GEN-LAST:event_jTableGHTCMouseClicked
