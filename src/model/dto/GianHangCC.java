@@ -14,19 +14,16 @@ public class GianHangCC extends GianHang { // một class tên GianHangCC kế t
     private int soLuongBanGhe; // thuộc tính soLuongBanGhe kiểu dữ liệu int phạm vi truy cập private 
 
     public GianHangCC() { // method Constructor không parameter
+        super();
     }
-    public GianHangCC(GianHangCC gianHangCC){ // method Contructor có tham số truyền vào là một đối tượng 
-        super(gianHangCC.getMaGianHang(), gianHangCC.getSoLuongBanGhe(),gianHangCC.getViTri());
-        this.soLuongBanGhe = gianHangCC.getSoLuongBanGhe();
-        this.soLuongQuatLamMat = gianHangCC.getSoLuongQuatLamMat();
-    }
+   
     // method Constructor có tham số truyền vào là các thuộc tính của đối tượng GianHangCC 
     public GianHangCC(String maGianHang, double dienTich, String viTri,int soLuongQuatLamMat, int soLuongBanGhe) {
         super(maGianHang, dienTich, viTri);
         this.soLuongQuatLamMat = soLuongQuatLamMat;
         this.soLuongBanGhe = soLuongBanGhe;
     }
-
+    
     public int getSoLuongQuatLamMat() { // method get values attribute , return kind of data int 
         return soLuongQuatLamMat;
     }

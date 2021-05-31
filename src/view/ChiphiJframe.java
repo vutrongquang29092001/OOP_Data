@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -50,7 +51,11 @@ public class ChiphiJframe extends JFrame {
         DecimalFormat df2 = new DecimalFormat("#.##");
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         //sự kiện khi bấm nút 
+
         ok.addActionListener((ae) -> {
+            startTime.setBorder(border1);
+            endTime.setBorder(border1);
+            days.setBorder(border1);
             if (startTime.getText().equals("") && endTime.getText().equals("") && days.getText().equals("")) {
                 startTime.setBorder(border);
                 endTime.setBorder(border);
@@ -63,37 +68,35 @@ public class ChiphiJframe extends JFrame {
                 endTime.setBorder(border1);
                 if (type.equals("ghcc")) {
                     Date a = null;
-                    try {
-                        a = df1.parse(startTime.getText());
-                    } catch (ParseException ex) {
-                        Logger.getLogger(ChiphiJframe.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                     Date b = null;
                     try {
+                        a = df1.parse(startTime.getText());
                         b = df1.parse(endTime.getText());
                     } catch (ParseException ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                         Logger.getLogger(ChiphiJframe.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    chiphi.setText(df2.format(gianHangCCController.chiPhiThueGianHang(id, a, b)));
+
+                    chiphi.setText(df2.format(gianHangCCController.chiPhiThueGianHang(id, b, a)));
 
                 }
                 if (type.equals("ghtc")) {
                     Date a = null;
+                    Date b = null;
+
                     try {
                         a = df1.parse(startTime.getText());
+                        b = df1.parse(endTime.getText());
 
                     } catch (ParseException ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                         Logger.getLogger(ChiphiJframe.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    Date b = null;
-                    try {
-                        b = df1.parse(endTime.getText());
-                    } catch (ParseException ex) {
-                        Logger.getLogger(ChiphiJframe.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    chiphi.setText(df2.format(gianHangTCController.chiPhiThueGianHang(id, a, b)));
+
+                    chiphi.setText(df2.format(gianHangTCController.chiPhiThueGianHang(id, b, a)));
 
                 }
+
             }
             if (days.getText().equals("") == false) {
                 days.setBorder(border1);
@@ -103,6 +106,14 @@ public class ChiphiJframe extends JFrame {
                 if (type.equals("ghtc")) {
                     chiphi.setText(df2.format(gianHangTCController.chiPhiThueGianHang(id, Integer.parseInt(days.getText()))));
                 }
+            }
+
+            if (startTime.getText().equals("") == false && endTime.getText().equals("") == false && days.getText().equals("") == false) {
+                startTime.setBorder(border);
+                endTime.setBorder(border);
+                days.setBorder(border);
+                chiphi.setText("");
+                chiphi.setBorder(border);
             }
 
         });
@@ -136,9 +147,11 @@ public class ChiphiJframe extends JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("StartTime");
 
-        startTime.setText("yyyy/MM/dd");
+        startTime.setBackground(java.awt.Color.white);
+        startTime.setToolTipText("yyyy/MM/dd");
 
-        endTime.setText("yyyy/MM/dd");
+        endTime.setBackground(java.awt.Color.white);
+        endTime.setToolTipText("yyyy/MM/dd");
         endTime.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 endTimeActionPerformed(evt);

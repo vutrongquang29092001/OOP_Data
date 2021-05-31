@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/model/dao/KhachThueInterface.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/model/dto/GianHang.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/view/HomeJFrame.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/model/dto/GianHangTC.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/controller/GianHangCCController.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/model/dao/GianHangCCDAO.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/view/LoginJFrame.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/project_oop/Project_OOP.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/view/DoanhThuJframe.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/view/ChiphiJframe.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/model/dao/KhachThueDAO.java</file>
+            <file>file:/home/vutrongquang29092001/NetBeansProjects/Project_OOP/src/model/dto/GianHangCC.java</file>
+        </group>
     </open-files>
 </project-private>

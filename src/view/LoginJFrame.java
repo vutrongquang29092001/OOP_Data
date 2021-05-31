@@ -20,9 +20,6 @@ import javax.swing.plaf.BorderUIResource;
  */
 public class LoginJFrame extends javax.swing.JFrame {
 
-    private Border border = BorderFactory.createLineBorder(Color.RED, 1);
-    private Border border1 = BorderUIResource.getBlackLineBorderUIResource();
-
     /**
      * Creates new form LoginJFrame
      */
@@ -53,7 +50,9 @@ public class LoginJFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(java.awt.Color.darkGray);
 
-        username.setBackground(java.awt.Color.darkGray);
+        username.setBackground(java.awt.Color.white);
+        username.setDisabledTextColor(java.awt.Color.white);
+        username.setSelectionColor(java.awt.Color.white);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/user.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -61,7 +60,9 @@ public class LoginJFrame extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/pass.png"))); // NOI18N
         jLabel2.setText("jLabel2");
 
-        password.setBackground(java.awt.Color.darkGray);
+        password.setBackground(java.awt.Color.white);
+        password.setDisabledTextColor(java.awt.Color.white);
+        password.setSelectionColor(java.awt.Color.white);
 
         login.setBackground(java.awt.Color.white);
         login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/login.png"))); // NOI18N
@@ -125,6 +126,8 @@ public class LoginJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+        Border border = BorderFactory.createLineBorder(Color.RED, 1);
+        Border border1 = BorderUIResource.getBlackLineBorderUIResource();
         if (username.getText().equals("")) {
             username.setBorder(border);
         } else {

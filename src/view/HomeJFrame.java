@@ -37,13 +37,15 @@ public class HomeJFrame extends javax.swing.JFrame {
     /**
      * Creates new form HomeJFrame
      */
+    private KhachThueController ktc = new KhachThueController();
+    private GianHangCCController ghcc = new GianHangCCController();
+    private GianHangTCController ghtc = new GianHangTCController();
+    
+    ///
     CardLayout cardLayout = new CardLayout();
     CardLayout c1, c2;
     Border border = BorderFactory.createLineBorder(Color.RED, 1);
     Border border1 = BorderUIResource.getBlackLineBorderUIResource();
-    KhachThueController ktc = new KhachThueController();
-    GianHangCCController ghcc = new GianHangCCController();
-    GianHangTCController ghtc = new GianHangTCController();
     DefaultTableModel model = new DefaultTableModel();
 
     //method khoi tao khong tham so 

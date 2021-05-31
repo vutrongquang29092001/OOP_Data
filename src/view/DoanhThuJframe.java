@@ -46,6 +46,7 @@ public class DoanhThuJframe extends JFrame {
         initComponents();
         doanhThuLogic(type);
     }
+
     // method tính doanh thu gian hang theo tham so truyen vào là  loai gian hang
     public void doanhThuLogic(String type) {
         Border border = BorderFactory.createLineBorder(Color.RED, 1);
@@ -55,6 +56,9 @@ public class DoanhThuJframe extends JFrame {
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
         DecimalFormat df2 = new DecimalFormat("#.##");
         ok.addActionListener((ae) -> {
+            days.setBorder(border1);
+            startTime.setBorder(border1);
+            endTime.setBorder(border1);
             if (startTime.getText().equals("") && endTime.getText().equals("") && days.getText().equals("")) {
                 startTime.setBorder(border);
                 endTime.setBorder(border);
@@ -65,35 +69,31 @@ public class DoanhThuJframe extends JFrame {
                 endTime.setBorder(border1);
                 if (type.equals("ghcc")) {
                     Date a = null;
-                    try {
-                        a = df1.parse(startTime.getText());
-                    } catch (ParseException ex) {
-                        Logger.getLogger(DoanhThuJframe.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                     Date b = null;
                     try {
+                        a = df1.parse(startTime.getText());
                         b = df1.parse(endTime.getText());
                     } catch (ParseException ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                         Logger.getLogger(DoanhThuJframe.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    doanhThu.setText(df2.format(gianHangCCController.doanhThu(a, b)));
-                    
+
+                    doanhThu.setText(df2.format(gianHangCCController.doanhThu(b, a)));
+
                 }
                 if (type.equals("ghtc")) {
                     Date a = null;
-                    try {
-                        a = df1.parse(startTime.getText());
-                    } catch (ParseException ex) {
-                        Logger.getLogger(DoanhThuJframe.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                     Date b = null;
                     try {
+                        a = df1.parse(startTime.getText());
                         b = df1.parse(endTime.getText());
                     } catch (ParseException ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Hint: yyyy/MM/dd", "Format error", JOptionPane.ERROR_MESSAGE);
                         Logger.getLogger(DoanhThuJframe.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    doanhThu.setText(df2.format(gianHangTCController.doanhThu(a, b)));
-                    
+
+                    doanhThu.setText(df2.format(gianHangTCController.doanhThu(b, a)));
+
                 }
             }
             if (days.getText().equals("") == false) {
@@ -105,7 +105,14 @@ public class DoanhThuJframe extends JFrame {
                     doanhThu.setText(df2.format(gianHangTCController.doanhThu(Integer.parseInt(days.getText()))));
                 }
             }
-            
+            if (startTime.getText().equals("") == false && endTime.getText().equals("") == false && days.getText().equals("") == false) {
+                startTime.setBorder(border);
+                endTime.setBorder(border);
+                days.setBorder(border);
+                doanhThu.setText("");
+                doanhThu.setBorder(border);
+            }
+
         });
     }
 
@@ -137,9 +144,15 @@ public class DoanhThuJframe extends JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("StartTime");
 
-        startTime.setText("yyyy/MM/dd");
+        startTime.setToolTipText("yyyy/MM/dd");
+        startTime.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        startTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startTimeActionPerformed(evt);
+            }
+        });
 
-        endTime.setText("yyyy/MM/dd");
+        endTime.setToolTipText("yyyy/MM/dd");
         endTime.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 endTimeActionPerformed(evt);
@@ -252,9 +265,13 @@ public class DoanhThuJframe extends JFrame {
     }//GEN-LAST:event_endTimeActionPerformed
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
-        
+
 
     }//GEN-LAST:event_okActionPerformed
+
+    private void startTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startTimeActionPerformed
 
     /**
      * @param args the command line arguments
