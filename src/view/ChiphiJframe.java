@@ -50,8 +50,8 @@ public class ChiphiJframe extends JFrame {
         GianHangTCController gianHangTCController = new GianHangTCController();
         DecimalFormat df2 = new DecimalFormat("#.##");
         DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
+        this.setTitle("Chi Phi ID : "+id);
         //sự kiện khi bấm nút 
-
         ok.addActionListener((ae) -> {
             startTime.setBorder(border1);
             endTime.setBorder(border1);
